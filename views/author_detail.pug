@@ -1,0 +1,28 @@
+extends layout
+
+block content
+
+      h1 作者: #{author.name}
+      p #{author.date_of_birth_formatted} —— #{author.date_of_death_formatted}
+      |作者寿命:
+      if  author.lifespan!=='未知'
+              |#{author.lifespan}
+      else 
+              |#{author.lifespan}
+      div(style='margin-left:20px;margin-top:20px')
+
+        h4 所写藏书
+        
+        dl
+        each book in author_books
+          dt 
+            a(href=book.url) #{book.title}
+          dd #{book.summary}
+
+        else
+          p 这怕是个假作者,一本书都没有。
+      hr
+      p
+        a(href=author.url+'/delete' style='color:red') 删除作者
+      p
+        a(href=author.url+'/update' style='color:green') 更新作者

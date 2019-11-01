@@ -1,0 +1,47 @@
+extends layout
+
+block content
+
+  h1 #{title}: #{book.title}
+  
+  p #[strong 作者:] 
+    a(href=book.author.url) #{book.author.name}
+  p #[strong 概要:] #{book.summary}
+  p #[strong ISBN:] #{book.isbn}
+  p #[strong 种类:] 
+    each val in book.genre
+      a(href=val.url) #{val.name}
+      |, 
+
+  hr
+  
+  if book_instances.length
+  
+    p #[strong 在试图删除藏书前请先删除与其相关联的藏书副本]
+  
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 藏书副本
+    
+        each book_copy in book_instances
+          hr
+          if book_copy.status=='可供借阅'
+            p.text-success #{book_copy.status}
+          else if book_copy.status=='馆藏维护'
+            p.text-danger #{book_copy.status}
+          else
+            p.text-warning #{book_copy.status} 
+          p #[strong 出版社:] #{book_copy.imprint}
+          if book_copy.status!='可供借阅'
+            p #[strong 归还日期:] #{book_copy.due_back_formatted}
+          p #[strong Id:] 
+            a(href=book_copy.url) #{book_copy._id}
+
+  else
+    p 你真的确定要删除该藏书吗?
+    
+    form(method='POST' action='')
+      div.form-group
+        input#id.form-control(type='hidden',name='id', required='true', value=book._id )
+
+      button.btn.btn-primary(type='submit') Delete

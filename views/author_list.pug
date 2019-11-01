@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1= title
+
+    ul
+    each author in author_list
+        li
+            a(href=author.url) #{author.name}
+            |(#{author.date_of_birth_formatted}——#{author.date_of_death_formatted})
+            |作者寿命: 
+            if author.lifespan !== '未知'
+             |#{author.lifespan}年
+            else 
+             |#{author.lifespan}
+           
+    else
+        li 暂时没有作者加盟本图书馆

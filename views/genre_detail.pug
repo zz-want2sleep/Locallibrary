@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+    h1 藏书种类：#{genre.name}
+
+    div(style='margin-left:20px;margin-top:20px')
+
+        h4 藏书介绍
+
+        dl
+        each book in genre_books
+            dt
+                a(href=book.url) #{book.title}
+            dd #{book.summary}
+        else
+            p 该种类目前无藏书
+                  
+    hr
+    p
+        a(href=genre.url+'/delete' style='color:red') 删除种类
+    p
+        a(href=genre.url+'/update' style='color:green') 更新种类

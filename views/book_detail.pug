@@ -1,0 +1,38 @@
+extends layout
+
+block content
+
+    h1 #{title}: #{book.title}
+
+    p #[strong 作者:]
+        a(href=book.author.url) #{book.author.name}
+    p #[strong 概要:] #{book.summary}
+    p #[strong ISBN:] #{book.isbn}
+    p #[strong 藏书种类:] &nbsp;
+        each val,index in book.genre
+            a(href=val.url) #{val.name}
+            if index<book.genre.length-1
+             |,
+    
+    div(style='margin-left:20px;margin-top:20px')
+        h4 藏书副本记录
+    each val in book_instances
+        hr
+        if val.status === '可供借阅'
+            p.text-success #{val.status}
+        else if val.status === '馆藏维护'
+            p.text-danger #{val.status}
+        else
+            p.text-warning #{val.status}
+        p #[strong 出版社:] #{val.imprint}
+        if val.status!=='可供借阅'&&val.status !== '馆藏维护'
+            p #[strong 归还日期:] #{val.due_back_formatted}
+        p #[strong Id:]&nbsp;
+                a(href=val.url) #{val._id}
+    else
+     p 本图书馆暂无藏书副本记录
+     hr
+     p
+        a(href=book.url+'/delete' style='color:red') 删除藏书
+     p 
+        a(href=book.url+'/update' style='color:green') 更新藏书

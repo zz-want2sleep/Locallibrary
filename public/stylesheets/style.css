@@ -1,0 +1,19 @@
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+/* //general layout */
+li {
+  margin: 10px;
+}
+
+h1 {
+  margin: 20px 20px 20px 0;
+}
+
+dt,
+dl {
+  margin-top: 20px
+}

@@ -1,0 +1,25 @@
+extends layout
+
+block content
+
+  h1 ID: #{bookinstance._id}
+  
+  p #[strong 藏书标题:] 
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p #[strong 出版社:] #{bookinstance.imprint}
+
+  p #[strong Status:] 
+    if bookinstance.status=='可供借阅'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status=='馆藏维护'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status} 
+      
+  if bookinstance.status!=='可供借阅'&&bookinstance.status!=='馆藏维护'
+    p #[strong 归还日期:] #{bookinstance.due_back_formatted}
+  hr
+  p
+      a(href=bookinstance.url+'/delete' style='red') 删除藏书副本
+  p
+      a(href=bookinstance.url+'/update' style='green') 更新藏书副本

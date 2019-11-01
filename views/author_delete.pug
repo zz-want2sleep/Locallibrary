@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 请确认#{title}: #{author.name}
+  p= '作者寿命：'+(author.lifespan?author.lifespan+'年':author.lifespan+'')
+  
+  if author_books.length
+  
+    p #[strong 在你试图删除该作者前,请先删除下面与该作者相关联的藏书。]
+  
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 藏书
+    
+      dl
+      each book in author_books
+        dt 
+          a(href=book.url) #{book.title}
+        dd #{book.summary}
+
+  else
+    p 你已经确定想要删除这位作者？
+    
+    form(method='POST' action='')
+      div.form-group
+        input#authorid.form-control(type='hidden',name='authorid', required='true', value=author._id )
+
+      button.btn.btn-primary(type='submit') Delete

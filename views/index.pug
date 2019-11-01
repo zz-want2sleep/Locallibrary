@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p #[em 本地图书馆]： 一个基于#[strong node.js] #[strong express]框架制作的小项目。
+
+  h1 图书馆当前状态
+
+  if error
+    p Error 发生错误无法获得当前状态.
+  else
+    p 图书馆当前状态如下所示:
+
+    ul
+      li #[strong 总藏书数:] !{data.book_count}
+      li #[strong 藏书副本数:] !{data.book_instance_count}
+      li #[strong 藏书可借阅数:] !{data.book_instance_available_count} 
+      li #[strong 作者数目:] !{data.author_count}
+      li #[strong 藏书种类数:] !{data.genre_count}

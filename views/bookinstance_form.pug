@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='book') 藏书副本:
+      select#book.form-control(type='select' placeholder='Select book' name='book' required='true')
+        for book in book_list
+          if bookinstance
+            option(value=book._id selected=(bookinstance.book.toString()==book._id.toString() ? 'selected' : false)) #{book.title}
+          else
+            option(value=book._id) #{book.title}
+        
+    div.form-group
+      label(for='imprint') 出版社:
+      input#imprint.form-control(type='text' placeholder='某某出版社、1998版' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint))
+    div.form-group
+      label(for='due_back') 归还日期:
+      input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_formatted))
+            
+    div.form-group
+      label(for='status') 当前状态:
+      select#status.form-control(type='select' placeholder='选择状态' name='status' required='true')
+        option(value='馆藏维护' selected=(undefined===bookinstance || bookinstance.status!='馆藏维护' ? false:'selected')) 馆藏维护
+        option(value='可供借阅' selected=(undefined===bookinstance || bookinstance.status!='可供借阅' ? false:'selected')) 可供借阅
+        option(value='已借出' selected=(undefined===bookinstance || bookinstance.status!='已借出' ? false:'selected')) 已借出
+        //- option(value='Reserved') Reserved
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
